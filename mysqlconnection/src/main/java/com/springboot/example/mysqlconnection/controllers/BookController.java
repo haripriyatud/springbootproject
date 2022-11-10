@@ -20,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.springboot.example.mysqlconnection.ResourceNotFoundException;
 import com.springboot.example.mysqlconnection.model.Book;
 import com.springboot.example.mysqlconnection.repository.BookRepository;
+import com.springboot.example.mysqlconnection.service.BookService;
 
 
 	@Controller
@@ -39,30 +40,21 @@ import com.springboot.example.mysqlconnection.repository.BookRepository;
 		    }
 			
 		 @Autowired 
-		 private BookRepository bookrepository;
+		 private BookService bookservice;
 			
 			@CrossOrigin()
 			  @GetMapping(path="/all")
 			  public ResponseEntity<List<Book>> getAllBooks() {
-			      List<Book> books = new ArrayList<Book>();
-
-		        bookrepository.findAll().forEach(books::add);
-
-			      return new ResponseEntity<>(books, HttpStatus.OK);
+			return	bookservice.getAllBooks();
+			    
 			  }
 				 
 			
 			@CrossOrigin()
 			  @GetMapping(path= "/book/{isbn}")
-			  ResponseEntity<Book> one(@PathVariable BigInteger isbn) {			  
-			        Optional <Book> book = bookrepository.findById(isbn);
-			        
-			        if (book.isPresent()) {
-			            return new ResponseEntity<Book>(book.get(), HttpStatus.OK);
-			          } else {
-			            throw new ResourceNotFoundException("Book with "+ isbn + " not found in the database");
-			          }
-			        }
+			  ResponseEntity<Book> getonebookByIsbn(@PathVariable BigInteger isbn) {			  
+			   return bookservice.getonebookByIsbn(isbn);
+			 }
 
 
 }
