@@ -1,0 +1,5 @@
+package com.example.mysqlconnectiondbexample.model;
+
+public class Book {
+
+}

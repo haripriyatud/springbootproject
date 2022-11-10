@@ -1,0 +1,19 @@
+package com.example.mysqlconnectiondbexample.model;
+
+import java.math.BigInteger;
+
+import javax.persistence.Entity;
+
+@Entity
+
+public class Book {
+	
+	private BigInteger isbn;
+	
+	private String title;
+	
+	private String tsubitle;
+
+
+
+}

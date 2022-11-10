@@ -1,0 +1,109 @@
+package com.example.mysqlconnectiondbexample;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+@Controller
+@RequestMapping(path="/products") 
+public class ProductController {
+	
+	
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+
+
+            }
+        };
+    }
+	
+	@Autowired
+	private ProductRepository productRepository;
+	
+	@CrossOrigin()
+	  @GetMapping(path="/all")
+	  public @ResponseBody Iterable<Product> getAllProducts() {
+	    return productRepository.findAll();
+	  }
+		  
+	  
+	  @RequestMapping(value = "/particularproduct/{productid}", method = RequestMethod.GET)
+	  public ResponseEntity<Object> getProduct(@PathVariable Integer productid) {
+	      Optional<Product> product = productRepository.findById(productid) ;
+	      if (product.isPresent()) {
+	          return new ResponseEntity <> (product, HttpStatus.OK);
+	      }
+	      throw new ResourceNotFoundException("Payment order id not found");
+	  }
+	  
+	  
+	    @PutMapping("/updateProduct/{productid}")
+	    ResponseEntity<Void> replaceEmployee(@RequestBody Product newproduct, @PathVariable Integer productid) {
+	    	
+		      Optional<Product> product = productRepository.findById(productid) ;
+		      if (product.isPresent()) {
+		    	  newproduct.setProductid(productid);
+		    	  newproduct.setProductname(newproduct.getProductname());
+	                newproduct.setPrice(newproduct.getPrice());
+	                productRepository.save(newproduct);
+	                return ResponseEntity.ok().build();
+		      }
+		      else{ 
+		    	  newproduct.setProductid(productid);
+		          productRepository.save(newproduct);
+	                return ResponseEntity.ok().build();
+		      }
+	    }
+
+		      
+
+	 
+	  
+	@RequestMapping(value = "/addProduct", method = RequestMethod.POST)
+	  public ResponseEntity<String> persistPerson(@RequestBody Product product) {
+		  productRepository.save(product);
+	      return ResponseEntity.status(HttpStatus.CREATED).build();
+	  }
+	
+
+	
+	
+	
+
+	    
+	@CrossOrigin()
+		@DeleteMapping("/deleteProduct/{productid}")
+	    public ResponseEntity<Void> deletePost(@PathVariable Integer productid) {
+		      Optional<Product> product = productRepository.findById(productid) ;
+		      if (product.isPresent()) {
+		    	  productRepository.deleteById(productid);
+	    		  return ResponseEntity.noContent().build();
+		      }
+		      throw new ResourceNotFoundException("Product with id " + productid +" not found in the database.");
+
+	    }
+
+
+	    
+	    
+}

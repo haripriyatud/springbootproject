@@ -1,0 +1,5 @@
+package com.example.mysqlconnectiondbexample.repository;
+
+public interface BookRepository {
+
+}
