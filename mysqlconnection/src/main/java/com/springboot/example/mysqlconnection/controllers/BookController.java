@@ -22,39 +22,60 @@ import com.springboot.example.mysqlconnection.model.Book;
 import com.springboot.example.mysqlconnection.repository.BookRepository;
 import com.springboot.example.mysqlconnection.service.BookService;
 
+@Controller
+@RequestMapping(path = "/books")
+public class BookController {
 
-	@Controller
-	@RequestMapping(path="/books") 
-	public class BookController {
-		
-		 @Bean
-		    public WebMvcConfigurer corsConfigurer() {
-		        return new WebMvcConfigurer() {
-		            @Override
-		            public void addCorsMappings(CorsRegistry registry) {
-		                registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE");
 
+			}
+		};
+	}
 
-		            }
-		        };
-		    }
-			
-		 @Autowired 
-		 private BookService bookservice;
-			
-			@CrossOrigin()
-			  @GetMapping(path="/all")
-			  public ResponseEntity<List<Book>> getAllBooks() {
-			return	bookservice.getAllBooks();
-			    
-			  }
-				 
-			
-			@CrossOrigin()
-			  @GetMapping(path= "/book/{isbn}")
-			  ResponseEntity<Book> getonebookByIsbn(@PathVariable BigInteger isbn) {			  
-			   return bookservice.getonebookByIsbn(isbn);
-			 }
+	@Autowired
+	private BookService bookservice;
 
+	@CrossOrigin()
+	@GetMapping(path = "/all")
+	public ResponseEntity<List<Book>> getAllBooks() {
+		return bookservice.getAllBooks();
+
+	}
+
+	@CrossOrigin()
+	@GetMapping(path = "/bookbyisbn/{isbn}")
+	ResponseEntity<Book> getonebookByIsbn(@PathVariable BigInteger isbn) {
+		return bookservice.getonebookByIsbn(isbn);
+	}
+
+	@CrossOrigin()
+	@GetMapping(path = "/bookbyauthor/{Author}")
+	ResponseEntity<List<Book>> getallByAuthorByAuthor(@PathVariable String Author) {
+		return bookservice.getAllbookByAuthor(Author);
+	}
+
+	@CrossOrigin()
+	@GetMapping(path = "/allOrderedByAuthor")
+	public ResponseEntity<List<Book>> getAllBooksOrderedByAuthor() {
+		return bookservice.getAllBooksOrderedByAuthor();
+	}
+
+	@CrossOrigin()
+	@GetMapping(path = "/bookbypublisher/{Publisher}")
+	ResponseEntity<List<Book>> getallByPublisher(@PathVariable String Publisher) {
+		return bookservice.getAllbookByPublisher(Publisher);
+	}
+
+	@CrossOrigin()
+	@GetMapping(path = "/bookbyauthorandpublisher/{Author}/{Publisher}")
+	ResponseEntity<List<Book>> getallByAuthorByAuthorAndPublisher(@PathVariable String Author,
+			@PathVariable String Publisher) {
+		return bookservice.getAllbookByAuthorAndPublisher(Author, Publisher);
+	}
 
 }

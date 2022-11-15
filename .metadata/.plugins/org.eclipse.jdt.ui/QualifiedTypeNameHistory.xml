@@ -9,4 +9,9 @@
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.springboot.example.mysqlconnection.ResourceNotFoundException"/>
+    <fullyQualifiedTypeName name="com.springboot.example.mysqlconnection.model.Book"/>
+    <fullyQualifiedTypeName name="com.springboot.example.mysqlconnection.repository.BookRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="com.springboot.example.mysqlconnection.service.BookService"/>
 </qualifiedTypeNameHistroy>

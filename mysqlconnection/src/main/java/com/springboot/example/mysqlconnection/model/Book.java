@@ -1,6 +1,5 @@
 package com.springboot.example.mysqlconnection.model;
 
-
 import java.math.BigInteger;
 
 import javax.persistence.Entity;
@@ -9,20 +8,20 @@ import javax.persistence.Id;
 @Entity
 
 public class Book {
-	
-	  @Id
+
+	@Id
 	private BigInteger isbn;
-	
+
 	private String title;
-	
+
 	private String subtitle;
-	
+
 	private String author;
-	
+
 	private String publisher;
-	
+
 	private String description;
-	
+
 	private String website;
 
 	public BigInteger getIsbn() {
@@ -80,11 +79,5 @@ public class Book {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	
-	
-	
-
-
-
 
 }
