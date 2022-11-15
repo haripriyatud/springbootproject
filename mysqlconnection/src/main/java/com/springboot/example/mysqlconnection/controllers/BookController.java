@@ -43,39 +43,49 @@ public class BookController {
 	@CrossOrigin()
 	@GetMapping(path = "/all")
 	public ResponseEntity<List<Book>> getAllBooks() {
-		return bookservice.getAllBooks();
+	 List<Book> books = bookservice.getAllBooks();
+	  return new ResponseEntity<>(books, HttpStatus.OK);
 
 	}
 
 	@CrossOrigin()
 	@GetMapping(path = "/bookbyisbn/{isbn}")
 	ResponseEntity<Book> getonebookByIsbn(@PathVariable BigInteger isbn) {
-		return bookservice.getonebookByIsbn(isbn);
+		Optional<Book> book = bookservice.getonebookByIsbn(isbn);
+		return new ResponseEntity<>(book.get(), HttpStatus.OK);
 	}
 
 	@CrossOrigin()
 	@GetMapping(path = "/bookbyauthor/{Author}")
 	ResponseEntity<List<Book>> getallByAuthorByAuthor(@PathVariable String Author) {
-		return bookservice.getAllbookByAuthor(Author);
+		 List<Book> books=  bookservice.getAllbookByAuthor(Author);
+		 return new ResponseEntity<>(books, HttpStatus.OK);
+		 
 	}
 
 	@CrossOrigin()
 	@GetMapping(path = "/allOrderedByAuthor")
 	public ResponseEntity<List<Book>> getAllBooksOrderedByAuthor() {
-		return bookservice.getAllBooksOrderedByAuthor();
+		 List<Book> books =  bookservice.getAllBooksOrderedByAuthor();
+		  return new ResponseEntity<>(books, HttpStatus.OK);
+
 	}
 
 	@CrossOrigin()
 	@GetMapping(path = "/bookbypublisher/{Publisher}")
 	ResponseEntity<List<Book>> getallByPublisher(@PathVariable String Publisher) {
-		return bookservice.getAllbookByPublisher(Publisher);
+		 List<Book> books=  bookservice.getAllbookByPublisher(Publisher);
+		 return new ResponseEntity<>(books, HttpStatus.OK);
+
 	}
 
 	@CrossOrigin()
 	@GetMapping(path = "/bookbyauthorandpublisher/{Author}/{Publisher}")
 	ResponseEntity<List<Book>> getallByAuthorByAuthorAndPublisher(@PathVariable String Author,
 			@PathVariable String Publisher) {
-		return bookservice.getAllbookByAuthorAndPublisher(Author, Publisher);
+		 List<Book> books=  bookservice.getAllbookByAuthorAndPublisher(Author, Publisher);
+		 return new ResponseEntity<>(books, HttpStatus.OK);
+
 	}
 
 }

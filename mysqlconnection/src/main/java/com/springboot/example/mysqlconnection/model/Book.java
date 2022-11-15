@@ -1,6 +1,7 @@
 package com.springboot.example.mysqlconnection.model;
 
 import java.math.BigInteger;
+import java.util.Comparator;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +24,37 @@ public class Book {
 	private String description;
 
 	private String website;
+	
+	public Book() {
+	}
 
+	public Book(BigInteger isbn, String title, String subtitle, String author, String publisher, String description,
+			String website) {
+		super();
+		this.isbn = isbn;
+		this.title = title;
+		this.subtitle = subtitle;
+		this.author = author;
+		this.publisher = publisher;
+		this.description = description;
+		this.website = website;
+	}
+	
+	public static Comparator<Book> authorComparator = new Comparator<Book>() {
+		  
+        // Comparing attributes of students
+        public int compare(Book b1, Book b2) {
+            String author1
+                = b1.getAuthor().toUpperCase();
+            String author2
+                = b2.getAuthor().toUpperCase();
+  
+            // Returning in ascending order
+            return author1.compareTo(
+                       author2);
+        }
+    };
+	
 	public BigInteger getIsbn() {
 		return isbn;
 	}
@@ -79,5 +110,7 @@ public class Book {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
+	
+	
 
 }

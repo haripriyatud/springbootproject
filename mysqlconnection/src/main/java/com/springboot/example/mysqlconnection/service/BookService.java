@@ -21,25 +21,27 @@ public class BookService {
 	@Autowired
 	private BookRepository bookrepository;
 
-	public ResponseEntity<List<Book>> getAllBooks() {
+	public List<Book> getAllBooks() {
+
 		List<Book> books = new ArrayList<Book>();
+		
 
 		bookrepository.findAll().forEach(books::add);
 
-		return new ResponseEntity<>(books, HttpStatus.OK);
+		return books ;
 	}
 
-	public ResponseEntity<Book> getonebookByIsbn(BigInteger isbn) {
+	public Optional <Book> getonebookByIsbn(BigInteger isbn) {
 		Optional<Book> book = bookrepository.findById(isbn);
 
 		if (book.isPresent()) {
-			return new ResponseEntity<Book>(book.get(), HttpStatus.OK);
+			return book;
 		} else {
 			throw new ResourceNotFoundException("Book with " + isbn + " not found in the database");
 		}
 	}
 
-	public ResponseEntity<List<Book>> getAllbookByAuthor(String Author) {
+	public List<Book> getAllbookByAuthor(String Author) {
 
 		List<Book> books = new ArrayList<Book>();
 
@@ -48,18 +50,18 @@ public class BookService {
 		if (books.isEmpty())
 			throw new ResourceNotFoundException("No Books with " + Author + " not found in the database");
 
-		return new ResponseEntity<>(books, HttpStatus.OK);
+		return books;
 	}
 
-	public ResponseEntity<List<Book>> getAllBooksOrderedByAuthor() {
+	public List<Book> getAllBooksOrderedByAuthor() {
 		List<Book> books = new ArrayList<Book>();
 
 		bookrepository.findAllByOrderByAuthor().forEach(books::add);
 
-		return new ResponseEntity<>(books, HttpStatus.OK);
+		return books;
 	}
 
-	public ResponseEntity<List<Book>> getAllbookByPublisher(String Publisher) {
+	public List<Book> getAllbookByPublisher(String Publisher) {
 
 		List<Book> books = new ArrayList<Book>();
 
@@ -68,10 +70,10 @@ public class BookService {
 		if (books.isEmpty())
 			throw new ResourceNotFoundException("No Books with " + Publisher + " not found in the database");
 
-		return new ResponseEntity<>(books, HttpStatus.OK);
+		return books;
 	}
 
-	public ResponseEntity<List<Book>> getAllbookByAuthorAndPublisher(String Author, String Publisher) {
+	public List<Book> getAllbookByAuthorAndPublisher(String Author, String Publisher) {
 
 		List<Book> books = new ArrayList<Book>();
 
@@ -80,8 +82,7 @@ public class BookService {
 		if (books.isEmpty())
 			throw new ResourceNotFoundException(
 					"No Books with " + Author + " and " + Publisher + " not found in the database");
-
-		return new ResponseEntity<>(books, HttpStatus.OK);
+		return books;
 
 	}
 
