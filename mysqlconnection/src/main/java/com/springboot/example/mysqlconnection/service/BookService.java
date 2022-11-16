@@ -6,12 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import com.springboot.example.mysqlconnection.ResourceNotFoundException;
+import com.springboot.example.mysqlconnection.exceptions.InvalidRequestException;
+import com.springboot.example.mysqlconnection.exceptions.ResourceNotFoundException;
 import com.springboot.example.mysqlconnection.model.Book;
 import com.springboot.example.mysqlconnection.repository.BookRepository;
 
@@ -85,5 +82,32 @@ public class BookService {
 		return books;
 
 	}
+	
+	
+	public Book postinBooks(Optional<Book> book) {
+		Book newbook = null;
+		if(book.isEmpty()) {
+			throw new InvalidRequestException("Request is not valid");
+			}
+		
+		else  {
+	      newbook= bookrepository.save(book.get());						
+		}
+		return newbook;
+	}
+	
+	
+	  public String deleteEmployee(BigInteger isbn) {
+		  Optional<Book> book = bookrepository.findById(isbn);
+
+			if (book.isPresent()) {
+				  bookrepository.deleteById(isbn);
+				  return "Book deleted sucessfully from database";
+
+			} else {
+				throw new ResourceNotFoundException("Book with " + isbn + " not found in the database");
+			}
+	  }
+	
 
 }

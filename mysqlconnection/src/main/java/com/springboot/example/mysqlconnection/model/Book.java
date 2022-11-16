@@ -48,9 +48,7 @@ public class Book {
                 = b1.getAuthor().toUpperCase();
             String author2
                 = b2.getAuthor().toUpperCase();
-  
-            // Returning in ascending order
-            return author1.compareTo(
+              return author1.compareTo(
                        author2);
         }
     };
@@ -110,7 +108,4 @@ public class Book {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	
-	
-
 }
