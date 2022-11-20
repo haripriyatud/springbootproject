@@ -82,7 +82,6 @@ public class BookController {
 			@PathVariable String Publisher) {
 		 List<Book> books=  bookservice.getAllbookByAuthorAndPublisher(Author, Publisher);
 		 return new ResponseEntity<>(books, HttpStatus.OK);
-
 	}
 	
 	@CrossOrigin()
